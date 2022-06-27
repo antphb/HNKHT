@@ -1,13 +1,11 @@
 # https://www.tra-loi-cau-hoi-phat-trien-web.com/vi/python/tkinter-cach-su-dung-cac-luong-de-ngan-vong-lap-su-kien-chinh-khoi-dong-bang/1073497675/
 #https://stackoverflow.com/questions/10847626/program-freezing-during-the-execution-of-a-function-in-tkinter
 import sys
-import time
 from tkinter.ttk import *
 import tkinter
 import tkinter.messagebox
 from tkinter.messagebox import showinfo
-from tkinter import PhotoImage, filedialog as fd
-from matplotlib.ft2font import HORIZONTAL
+from tkinter import filedialog as fd
 from tkintermapview import TkinterMapView
 from main2opt import *
 
@@ -35,7 +33,7 @@ class App(tkinter.Tk):
 
         # img=PhotoImage(file='map.png')
         # self.iconphoto(False,img)
-        # self.iconbitmap(r"map.ico")
+        self.iconbitmap(r"map.ico")
         self.configure(background="gray")
         
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -54,10 +52,10 @@ class App(tkinter.Tk):
         self.search_bar.grid(row=0, column=0, pady=10, padx=10, sticky="we")
         self.search_bar.focus()
 
-        self.search_bar_button = tkinter.Button(master=self, width=8, text="Tìm kiếm", command=self.search)
+        self.search_bar_button = tkinter.Button(master=self, width=8, text="Tìm kiếm",bg='black', fg='white', command=self.search)
         self.search_bar_button.grid(row=0, column=1, pady=10, padx=10)
 
-        self.search_bar_clear = tkinter.Button(master=self, width=8, text="Clear", command=self.clear)
+        self.search_bar_clear = tkinter.Button(master=self, width=8, text="Clear",bg='black', fg='white', command=self.clear)
         self.search_bar_clear.grid(row=0, column=2, pady=10, padx=10)
 
         self.map_widget = TkinterMapView(width=self.WIDTH, height=600, corner_radius=0)
@@ -71,17 +69,17 @@ class App(tkinter.Tk):
 
         self.listbox_button_frame.grid_columnconfigure(0, weight=1)
 
-        self.save_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="Thêm địa chỉ",command=self.save_marker)
-        self.save_marker_button.grid(row=0, column=0, pady=5, padx=10)
+        self.add_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="Thêm địa chỉ",bg='black', fg='white',command=self.add_marker)
+        self.add_marker_button.grid(row=0, column=0, pady=5, padx=10)
 
-        self.clear_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="Xóa list marker",command=self.clear_all)
-        self.clear_marker_button.grid(row=1, column=0, pady=5, padx=10)
+        self.clear_all_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="Xóa dữ liệu",bg='black', fg='white',command=self.clear_all)
+        self.clear_all_button.grid(row=1, column=0, pady=5, padx=10)
 
-        self.connect_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="Open file data",command=self.select_file)
-        self.connect_marker_button.grid(row=2, column=0, pady=5, padx=10)
+        self.open_file_data = tkinter.Button(master=self.listbox_button_frame, width=20, text="Mở file dữ liệu",bg='black', fg='white',command=self.select_file)
+        self.open_file_data.grid(row=2, column=0, pady=5, padx=10)
         
-        self.connect_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="Display map",command=self.Display_map)
-        self.connect_marker_button.grid(row=3, column=0, pady=5, padx=10)
+        self.display_map = tkinter.Button(master=self.listbox_button_frame, width=20, text="Hiển thị map",bg='black', fg='white',command=self.Display_map)
+        self.display_map.grid(row=3, column=0, pady=5, padx=10)
 
         self.map_widget.set_address("Hồ Chí Minh")
 
@@ -94,8 +92,6 @@ class App(tkinter.Tk):
         self.filename=None   
         self.points=[]
         
-    def start_loading(self):
-        pass
     
     def search(self, event=None):
         if not self.search_in_progress:
@@ -110,10 +106,10 @@ class App(tkinter.Tk):
                 self.search_marker = None
             self.search_in_progress = False
             
-    def save_marker(self):
+    def add_marker(self):
         if self.search_marker is not None:
             if len(self.points)>1:
-                self.clear_marker_list()
+                self.clear_all_list()
                 # f" {len(self.marker_list)}. {self.search_marker.text} "
                 self.marker_list_box.insert(tkinter.END)
                 self.marker_list_box.see(tkinter.END)
@@ -131,7 +127,7 @@ class App(tkinter.Tk):
                 self.points.append(self.search_marker.position)
                 self.map_widget.set_polygon(self.points)
 
-    def clear_marker_list(self):
+    def clear_all_list(self):
         for marker in self.marker_list:
             self.map_widget.delete(marker)
 
@@ -159,11 +155,9 @@ class App(tkinter.Tk):
         tkinter.messagebox.showinfo("Message", "Xóa toàn bộ dữ liệu thành công!")
 
 
-        # self.connect_marker()
 
     def connect_marker(self):
         tkinter.messagebox.showinfo("Message", "Tải dữ liệu lên")
-        # self.start_loading()
         self.route=main_xuli(self.points)
         self.diachireal=diachi(self.route)
         tkinter.messagebox.showinfo("Message", "Hoàn tất tải dữ liệu")
