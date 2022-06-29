@@ -1,6 +1,7 @@
 # https://www.tra-loi-cau-hoi-phat-trien-web.com/vi/python/tkinter-cach-su-dung-cac-luong-de-ngan-vong-lap-su-kien-chinh-khoi-dong-bang/1073497675/
 #https://stackoverflow.com/questions/10847626/program-freezing-during-the-execution-of-a-function-in-tkinter
 import sys
+import os
 from tkinter.ttk import *
 import tkinter
 import tkinter.messagebox
@@ -181,13 +182,15 @@ class App(tkinter.Tk):
             tkinter.messagebox.showerror("Message","Không có dữ liệu để hiển thị Map")
         
     def select_file(self):
-        filetypes = (('text files', '*.txt'),('All files', '*.*'))
+        filetypes = (('text files', '*.txt'),('csv files', '*.csv'),('all files', '*.*'))
 
         filename = fd.askopenfilename(title='Open a file',initialdir='/',filetypes=filetypes)
 
         # showinfo(title='Selected File',message=filename)
         self.filename=filename
-        if (self.filename!=""):
+        file_name, file_extension = os.path.splitext(os.path.basename(self.filename))
+        
+        if (self.filename!="" and (file_extension==".txt" or file_extension==".csv")):
             self.points=read_point(self.filename)
             self.connect_marker()
         else:
