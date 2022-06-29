@@ -6,7 +6,7 @@ Thêm địa chỉ: khi tìm kiếm được địa chỉ mong muốn thì có t
 
 Xóa dữ liệu: xóa toàn bộ dữ liệu đưa vào
 
-Mở file dữ liệu: thêm tập tin .txt vào (chạy thử tập tin kèm theo hcm.txt)
+Mở file dữ liệu: mở tập tin *.txt hoặc *.csv tải dữ liệu lên (chạy thử tập tin kèm theo hcm.txt)
 
 Hiển thị map: sau khi mở file dữ liệu thành công bấm hiển thị map để tạo đường đi phù hợp
 
